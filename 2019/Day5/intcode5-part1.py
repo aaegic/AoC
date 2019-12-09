@@ -32,7 +32,7 @@ while 1:
     _pm1 = (ic[_pos] / 1000).__trunc__() % 10
     _pm0 = (ic[_pos] / 100).__trunc__() % 10
 
-    if _oc == 1: 
+    if _oc == 1:
         if _pm0:
             __opand0 = ic[_pos+1]
         else:
@@ -63,7 +63,7 @@ while 1:
     if _oc == 3:
         ic[ic[_pos+1]] = int(input())
         _pos += 2
-    
+
     if _oc == 4:
         if _pm0:
             __opand0 = ic[_pos+1]
@@ -72,8 +72,8 @@ while 1:
 
         print(__opand0)
         _pos += 2
-    
-    if _oc == 99: 
+
+    if _oc == 99:
         break
 
 print("out: ", ic)
