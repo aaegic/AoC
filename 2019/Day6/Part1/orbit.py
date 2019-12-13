@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+""" CAVEAT: COM node must be on first line of input.txt """
+
 from var_dump import var_dump
 
 fh = open("input.txt", mode='r')
@@ -9,11 +11,13 @@ fh.close()
 input_list = input_list.strip()
 input_list = input_list.split("\n")
 
-def findp (name, dict):
+
+def findp(name, dict):
     for i, j in dict.items():
         for k in j:
             if k == name:
                 return i
+
 
 start = ""
 orbit = {}
@@ -35,13 +39,13 @@ for i in input_list:
 
 for i, j in orbit.items():
     for k in orbit.get(i):
-        if not k in orbit:
+        if k not in orbit:
             pendn.append(k)
 
 for i in pendn:
     p = []
     p.append(i)
-    while not i is start:
+    while i is not start:
         i = findp(i, orbit)
         p.append(i)
     paths.append(list(reversed(p)))
