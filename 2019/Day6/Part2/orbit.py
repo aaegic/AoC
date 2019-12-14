@@ -64,6 +64,5 @@ d = set(paths[path_san]).symmetric_difference(set(paths[path_you]))
 
 print(paths[path_san])
 print(paths[path_you])
-print(path_lcn)
 print(d)
 print(len(d)-2)
