@@ -4,7 +4,6 @@ data=str("2222022222222222122222220222221221220222222102221222022122022220222222
 
 """ The image you received is 25 pixels wide and 6 pixels tall. """
 
-
 image = str("")
 image_x = 25
 image_y = 6
