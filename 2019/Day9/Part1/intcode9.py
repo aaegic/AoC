@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
 from var_dump import var_dump
-#from collections import defaultdict
-#from defaultlist import defaultlist
 
 def intcode(input, ic):
 
@@ -230,5 +228,4 @@ ic = defaultlist(int, [1102,34463338,34463338,63,1007,63,34463338,63,1005,63,53,
 #ic = defaultlist(int, [1102,34915192,34915192,7,4,7,99,0])
 #ic = defaultlist(int, [104,1125899906842624,99])
 
-#print(ic)
 print(intcode([1], ic))
