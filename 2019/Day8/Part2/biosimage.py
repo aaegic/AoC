@@ -4,13 +4,14 @@ data=str("2222022222222222122222220222221221220222222102221222022122022220222222
 
 """ The image you received is 25 pixels wide and 6 pixels tall. """
 
+
 image = str("")
 image_x = 25
 image_y = 6
 offset = 0
 
 while len(image) < image_x * image_y:
-    if data[offset] is "0" or data[offset] is "1":
+    if data[offset] is not "2":
         image += str(data[offset])
         offset = len(image)
     else:
