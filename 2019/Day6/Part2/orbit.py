@@ -26,7 +26,6 @@ pendn = []
 paths = []
 path_san = ''
 path_you = ''
-path_lcn = ''
 
 for i in input_list:
     _a, _b = i.split(")")
