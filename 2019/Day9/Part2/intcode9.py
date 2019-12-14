@@ -4,6 +4,32 @@ from var_dump import var_dump
 
 def intcode(input, ic):
 
+    def get_opand(g_opand):
+        if g_opand == 0:
+            if _pm0 == 2:
+                #   2 = relative mode
+                return ic[ic[_ptr+1] + _rel]
+            elif _pm0 == 1:
+                #   1 = immediate mode
+                return ic[_ptr+1]
+            else:
+                #   0 = position mode
+                return ic[ic[_ptr+1]]
+        elif g_opand == 1:
+            if _pm1 == 2:
+                return ic[ic[_ptr+2] + _rel]
+            elif _pm1 == 1:
+                return ic[_ptr+2]
+            else:
+                return ic[ic[_ptr+2]]
+        elif g_opand == 2:
+            if _pm2 == 2:
+                return ic[_ptr+3] + _rel
+            elif _pm1 == 1:
+                return ic[_ptr+3]
+            else:
+                return ic[_ptr+3]
+
     _ptr = 0
     _rel = 0
     output = []
@@ -17,27 +43,18 @@ def intcode(input, ic):
 
         #   Addition
         if _oc == 1:
-            if _pm0 == 2:
-                #   2 = relative mode
-                __opand0 = ic[ic[_ptr+1] + _rel]
-            elif _pm0 == 1:
-                #   1 = immediate mode
-                __opand0 = ic[_ptr+1]
-            else:
-                #   0 = position mode
-                __opand0 = ic[ic[_ptr+1]]
+            __opand0 = get_opand(0)
+            __opand1 = get_opand(1)
+            __opand2 = get_opand(2)
 
             ic[__opand2] = __opand0 + __opand1
             _ptr += 4
 
         #   Multiplication
         if _oc == 2:
-            if _pm0 == 2:
-                __opand0 = ic[ic[_ptr+1] + _rel]
-            elif _pm0 == 1:
-                __opand0 = ic[_ptr+1]
-            else:
-                __opand0 = ic[ic[_ptr+1]]
+            __opand0 = get_opand(0)
+            __opand1 = get_opand(1)
+            __opand2 = get_opand(2)
 
             ic[__opand2] = __opand0 * __opand1
             _ptr += 4
@@ -49,24 +66,15 @@ def intcode(input, ic):
 
         #   Output
         if _oc == 4:
-            if _pm0 == 2:
-                __opand0 = ic[ic[_ptr+1] + _rel]
-            elif _pm0 == 1:
-                __opand0 = ic[_ptr+1]
-            else:
-                __opand0 = ic[ic[_ptr+1]]
+            __opand0 = get_opand(0)
 
             output.append(__opand0)
             _ptr += 2
 
         #   jump-if-true
         if _oc == 5:
-            if _pm0 == 2:
-                __opand0 = ic[ic[_ptr+1] + _rel]
-            elif _pm0 == 1:
-                __opand0 = ic[_ptr+1]
-            else:
-                __opand0 = ic[ic[_ptr+1]]
+            __opand0 = get_opand(0)
+            __opand1 = get_opand(1)
 
             if __opand0:
                 _ptr = __opand1
@@ -75,19 +83,8 @@ def intcode(input, ic):
 
         #   jump-if-false
         if _oc == 6:
-            if _pm0 == 2:
-                __opand0 = ic[ic[_ptr+1] + _rel]
-            elif _pm0 == 1:
-                __opand0 = ic[_ptr+1]
-            else:
-                __opand0 = ic[ic[_ptr+1]]
-
-            if _pm1 == 2:
-                __opand1 = ic[ic[_ptr+2] + _rel]
-            elif _pm1 == 1:
-                __opand1 = ic[_ptr+2]
-            else:
-                __opand1 = ic[ic[_ptr+2]]
+            __opand0 = get_opand(0)
+            __opand1 = get_opand(1)
 
             if not __opand0:
                 _ptr = __opand1
@@ -96,26 +93,9 @@ def intcode(input, ic):
 
         #   less than
         if _oc == 7:
-            if _pm0 == 2:
-                __opand0 = ic[ic[_ptr+1] + _rel]
-            elif _pm0 == 1:
-                __opand0 = ic[_ptr+1]
-            else:
-                __opand0 = ic[ic[_ptr+1]]
-
-            if _pm1 == 2:
-                __opand1 = ic[ic[_ptr+2] + _rel]
-            elif _pm1 == 1:
-                __opand1 = ic[_ptr+2]
-            else:
-                __opand1 = ic[ic[_ptr+2]]
-
-            if _pm2 == 2:
-                __opand2 = ic[_ptr+3] + _rel
-            elif _pm1 == 1:
-                __opand2 = ic[_ptr+3]
-            else:
-                __opand2 = ic[_ptr+3]
+            __opand0 = get_opand(0)
+            __opand1 = get_opand(1)
+            __opand2 = get_opand(2)
 
             if __opand0 < __opand1:
                 ic[__opand2] = 1
@@ -126,26 +106,9 @@ def intcode(input, ic):
 
         #   equals
         if _oc == 8:
-            if _pm0 == 2:
-                __opand0 = ic[ic[_ptr+1] + _rel]
-            elif _pm0 == 1:
-                __opand0 = ic[_ptr+1]
-            else:
-                __opand0 = ic[ic[_ptr+1]]
-
-            if _pm1 == 2:
-                __opand1 = ic[ic[_ptr+2] + _rel]
-            elif _pm1 == 1:
-                __opand1 = ic[_ptr+2]
-            else:
-                __opand1 = ic[ic[_ptr+2]]
-
-            if _pm2 == 2:
-                __opand2 = ic[_ptr+3] + _rel
-            elif _pm1 == 1:
-                __opand2 = ic[_ptr+3]
-            else:
-                __opand2 = ic[_ptr+3]
+            __opand0 = get_opand(0)
+            __opand1 = get_opand(1)
+            __opand2 = get_opand(2)
 
             if __opand0 == __opand1:
                 ic[__opand2] = 1
@@ -156,12 +119,7 @@ def intcode(input, ic):
 
         #   adjust relative base
         if _oc == 9:
-            if _pm0 == 2:
-                __opand0 = ic[ic[_ptr+1] + _rel]
-            elif _pm0 == 1:
-                __opand0 = ic[_ptr+1]
-            else:
-                __opand0 = ic[ic[_ptr+1]]
+            __opand0 = get_opand(0)
 
             _rel = _rel + __opand0
             _ptr += 2
@@ -193,4 +151,4 @@ ic = defaultlist(int, [1102,34463338,34463338,63,1007,63,34463338,63,1005,63,53,
 #ic = defaultlist(int, [1102,34915192,34915192,7,4,7,99,0])
 #ic = defaultlist(int, [104,1125899906842624,99])
 
-print(intcode([1], ic))
+print(intcode([2], ic))
