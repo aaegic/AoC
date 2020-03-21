@@ -22,7 +22,11 @@ r_table = []
 e_table = defaultdict(int)
 t_table = []
 
-fh = open("input-demo1.txt", mode='r')
+m_table = defaultdict(int)
+
+y_table = defaultdict(int)
+
+fh = open("input-demo2.txt", mode='r')
 
 for i in fh:
     i = i.strip()
@@ -43,52 +47,120 @@ fh.close()
 
 var_dump(r_table)
 
-def c_ore(ename, qty = 1, cname = 'default'):
+def c_ore(ename, eqty = 1, cname = 'default'):
     global r_table
+    global m_table
     global e_table
+    global t_table
 
-    print("c_core:", ename, qty)
+    tl = 0
 
-    for e in r_table:
-        if e['name'] == ename:
-            for c in e['elmnt']:
-                if c == "ORE":
-                    print(ename, "needs", e['elmnt'][c], c)
-                    if ename in e_table:
-                        e_table[ename].append(cname)
-                    else:
-                        e_table[ename] = []
-                        e_table[ename].append(cname)
+    if ename == "FUEL":
+        tl = 1
 
-                    return
-                else:
-                    ryield = next(k['yield'] for k in r_table if k['name'] == c)
-                    print(ename, "needs", e['elmnt'][c], c, 'yields', ryield)
+    print("====================")
+    print("c_core:", ename, eqty)
 
-                    if ryield >= e['elmnt'][c]:
-                        i_r = range(1)
-                    else:
-                        ncm = nncm(ryield, e['elmnt'][c])
-                        print("NNCM", ncm, "RYIELD", ryield, "/", ncm // ryield)
-                        i_r = range(ncm // ryield)
+    relmnts = next(k['elmnt'] for k in r_table if k['name'] == ename)
 
-                    var_dump(i_r)
-                    for i in i_r:
-                        c_ore(c, e['elmnt'][c], ename)
+    var_dump(relmnts)
 
-c_ore("FUEL")
-var_dump(e_table)
+    if ename != "FUEL":
+        t_table.append((ename, eqty))
 
-ore_used_total = 0
-for ename, eqty in e_table.items():
+    var_dump(t_table)
+
+    for rname, rqty in relmnts.items():
+        if rname == "ORE":
+            print(rname, "needs", rname, eqty)
+            if ename in m_table:
+                m_table[ename].append(t_table)
+            else:
+                m_table[ename] = []
+                m_table[ename].append(t_table)
+        else:
+            #print(ename, "needs", rname, rqty)
+            #for i in range(rqty):
+            c_ore(rname, rqty, ename)
+
+        if tl == 1:
+            t_table = []
+
+
+            #ryield = next(k['yield'] for k in r_table if k['name'] == rname)
+            #print(ename, "needs", rqty, rname, 'yields', ryield)
+
+            #if ryield >= rqty:
+            #    i_r = range(1)
+            #else:
+            #    ncm = nncm(ryield, rqty)
+            #    print("NNCM", ncm, "RYIELD", ryield, "/", ncm // ryield)
+            #    i_r = range(ncm // ryield)
+
+            #for i in i_r:
+            #    c_ore(rname, rqty, ename)
+
+c_ore("FUEL", 1, "FUEL")
+
+var_dump(m_table)
+
+for i in m_table:
+    print(m_table[i])
+
+
+exit()
+ore_used = 0
+for ename, eqty in m_table.items():
     ryield = next(k['yield'] for k in r_table if k['name'] == ename)
-    rore = next(k['elmnt']['ORE'] for k in r_table if k['name'] == ename)
+    ore_used += nncm(ryield, sum(eqty))
 
-    ncm = nncm(ryield, len(eqty))
-    ore_used = int((ncm * rore) / ryield)
+print(ore_used)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exit()
+felmnts = next(k['elmnt'] for k in r_table if k['name'] == 'FUEL')
+var_dump(felmnts)
+
+ore_used = 0
+ore_used_total = 0
+
+for ename, eqty in felmnts.items():
+    ore_used = 0
+
+    ryield = next(k['yield'] for k in r_table if k['name'] == ename)
+    print('FUEL', "needs", eqty, ename, 'yields', ryield)
+
+    if ryield >= eqty:
+        i_r = range(1)
+    else:
+        ncm = nncm(ryield, eqty)
+        print("NNCM", ncm, "RYIELD", ryield, "/", ncm // ryield)
+        i_r = range(ncm // ryield)
+
+    for i in i_r:
+        c_ore(ename, eqty, 'FUEL')
+
+    var_dump(e_table)
+    print(ename, "ryield:", ryield, "sum ore:", sum(e_table['ORE']),"nncm:", nncm(ryield, sum(e_table['ORE'])))
+    ore_used = nncm(ryield, sum(e_table['ORE']))
+    print(ore_used)
 
     ore_used_total += ore_used
 
-    print(ename, eqty, len(eqty), ryield, "NCM:", ncm, rore, ore_used)
 
+var_dump(e_table)
 print(ore_used_total)
