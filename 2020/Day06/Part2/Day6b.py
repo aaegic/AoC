@@ -1,9 +1,5 @@
 #!/usr/bin/python3
 
-from var_dump import var_dump
-import math
-from collections import defaultdict
-
 fh = open("input.txt", mode='r')
 intxt = fh.read()
 fh.close()
