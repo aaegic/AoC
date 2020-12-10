@@ -12,7 +12,6 @@ intxt = intxt.strip()
 intxt = intxt.split("\n")
 
 bags = {}
-cntr = 0
 
 for line in intxt:
     line = line.replace(" bags", "")\
