@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-fh = open("input.txt", mode='r')
+fh = open("input-test.txt", mode='r')
 intxt = fh.read()
 fh.close()
 
