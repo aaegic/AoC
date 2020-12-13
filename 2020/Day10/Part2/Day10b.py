@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
-from var_dump import var_dump
+from functools import lru_cache
 
-fh = open("input-test2.txt", mode='r')
+fh = open("input.txt", mode='r')
 intxt = fh.read()
 fh.close()
 
@@ -13,23 +13,19 @@ stack = [0]
 stack.extend(sorted(list(map(int, intxt))))
 stack.append(stack[-1]+3)
 
-ctack = [0]
-ctack[0] = [0]
+@lru_cache(maxsize = 1000)
+def pathr (ptr, stack):
+    npath = 0
 
-ncomb = 0
+    if stack[-1] == stack[ptr]:
+        return 1
+    
+    for n in range(len(stack)):
+        if ptr+n < len(stack):
+            if stack[ptr+n] - stack[ptr] <= 3 and stack[ptr+n] - stack[ptr] > 0:
+                npath += pathr(ptr+n, stack)
 
-for i in stack:
-    for j in range(len(ctack)):
-        if i - ctack[j][-1] <= 3 and i - ctack[j][-1] > 0:
-            mlist = ctack[j].copy()
-            mlist.append(i)
-            ctack.append(mlist)
+    return npath
 
-
-
-for i in range(len(ctack)):
-    if ctack[i][0] == stack[0] and ctack[i][-1] == stack[-1]:
-        #print(ctack[i])
-        ncomb += 1
-        
-print(ncomb)
+print(stack)
+print(pathr(0, tuple(stack)))
