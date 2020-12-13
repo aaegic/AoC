@@ -1,0 +1,10 @@
+L.LL.#L.LL
+LLLLL.L.LL
+L.L.L..L..
+LLLL..L.LL
+L.LL..L.LL
+#....X...#
+..L.L.....
+LLLLL.LLLL
+L.LLL.LL.L
+L.LLL#...X
