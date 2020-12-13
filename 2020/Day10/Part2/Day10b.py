@@ -17,8 +17,7 @@ stack.append(stack[-1]+3)
 def pathr (ptr, stack):
     npath = 0
 
-    if stack[-1] == stack[ptr]:
-        return 1
+    if stack[-1] == stack[ptr]: return 1
     
     for n in range(len(stack)):
         if ptr+n < len(stack):
