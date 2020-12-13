@@ -21,7 +21,7 @@ def pathr (ptr, stack):
     
     for n in range(len(stack)):
         if ptr+n < len(stack):
-            if stack[ptr+n] - stack[ptr] <= 3 and stack[ptr+n] - stack[ptr] > 0:
+            if 0 < stack[ptr+n] - stack[ptr] <= 3:
                 npath += pathr(ptr+n, stack)
 
     return npath
