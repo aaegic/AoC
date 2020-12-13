@@ -2,7 +2,7 @@
 
 from copy import deepcopy
 
-fh = open("input-test.txt", mode='r')
+fh = open("input.txt", mode='r')
 intxt = fh.read()
 fh.close()
 
@@ -16,52 +16,79 @@ def cntocc (f): return sum([ r.count("#") for r in f ])
 def cntadj (r, c, f):
     adj = 0
     
-    for dd in range(1, len(f)):
+    lend = len(f) if len(f) > len(f[r]) else len(f[r])
+    
+    for dd in range(1, lend): #up left
         if r - dd < 0 or c - dd < 0:
+            break
+        if f[r-dd][c-dd] == "L":
             break
         if f[r-dd][c-dd] == "#":
             adj += 1
-            break        
-        if f[r-dd][c-dd] == "L":
-            break      
+            break
+
+    for dd in range(1, lend): #down right
+        if r + dd > len(f) - 1 or c + dd > len(f[r]) - 1:
+            break
+        if f[r+dd][c+dd] == "L":
+            break
+        if f[r+dd][c+dd] == "#":
+            adj += 1
+            break
+
+    for dd in range(1, lend): #down left
+        if r + dd > len(f) - 1 or c - dd < 0:
+            break
+        if f[r+dd][c-dd] == "L":
+            break
+        if f[r+dd][c-dd] == "#":
+            adj += 1
+            break
+        
+    for dd in range(1, lend): #up right
+        if r - dd < 0 or c + dd > len(f[r]) - 1:
+            break
+        if f[r-dd][c+dd] == "L":
+            break
+        if f[r-dd][c+dd] == "#":
+            adj += 1
+            break
     
-    if r > 0: #up
-        for dr in range(1, len(f) - r + 1):
-            if f[r-dr][c] == "#":
-                adj += 1
-                break
-            if f[r-dr][c] == "L":
-                break
+    for dr in range(1, len(f)): #up
+        if r - dr < 0:
+            break
+        if f[r-dr][c] == "L":
+            break
+        if f[r-dr][c] == "#":
+            adj += 1
+            break
     
-    if r > 0 and c < len(f[r]) - 1: adj += f[r-1][c+1].count("#")
-    
-    if c > 0: #left
-        for dc in range(1, len(f) - c + 1):
-            if f[r][c-dc] == "#":
-                adj += 1
-                break
-            if f[r][c-dc] == "L":
-                break
-                
-    if c < len(f) - 1: #right
-        for dc in range(1, len(f) - c):
-            if f[r][c+dc] == "#":
-                adj += 1
-                break
-            if f[r][c+dc] == "L":
-                break
-    
-    if r < len(f) - 1 and c > 0: adj += f[r+1][c-1].count("#")
-    
-    if r < len(f) - 1: #down
-        for dr in range(1, len(f) - r):
-            if f[r+dr][c] == "#":
-                adj += 1
-                break
-            if f[r+dr][c] == "L":
-                break
-    
-    if r < len(f) - 1 and c < len(f[r]) - 1: adj += f[r+1][c+1].count("#")
+    for dc in range(1, len(f[r])): #left
+        if c - dc < 0:
+            break
+        if f[r][c-dc] == "L":
+            break
+        if f[r][c-dc] == "#":
+            adj += 1
+            break
+
+    for dc in range(1, len(f[r])): #right
+        if c + dc > len(f[r]) - 1:
+            break
+        if f[r][c+dc] == "L":
+            break
+        if f[r][c+dc] == "#":
+            adj += 1
+            break
+
+    for dr in range(1, len(f)): #down
+        if r + dr > len(f) - 1:
+            break
+        if f[r+dr][c] == "L":
+            break
+        if f[r+dr][c] == "#":
+            adj += 1
+            break
     
     return(adj)
     
@@ -79,10 +106,6 @@ def part1 (f):
     return(_f)
 
 
-print(cntadj(9,9, f))
-
-
-"""
 f2 = []
 f1 = part1(tuple(f))
 
@@ -90,6 +113,5 @@ while f1 != f2:
     f2 = deepcopy(f1)    
     f1 = part1(tuple(f1))
 
-showf(f1)
+#showf(f1)
 print(cntocc(f1))
-"""
