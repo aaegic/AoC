@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
+import itertools
 import copy
+import math
 
-fh = open("input-test.txt")
+fh = open("input.txt")
 intxt = fh.read()
 fh.close()
 
@@ -10,18 +12,17 @@ sects = intxt.split("\n\n")
 srule = sects[0].split("\n")
 sytkt = sects[1].split("\n")[1:]
 sntkt = sects[2].split("\n")[1:]
-gdtkt = dict()
-altkt = dict()
+gdtkt = list()
+altkt = list()
 sntkt.extend(sytkt)
 
 for i, tkt in enumerate(sntkt):
     tkt = list(map(int, tkt.split(',')))
-    altkt.update({i: tkt})
+    altkt.append(tkt)
 
 rules = dict()
 
-for i, r in zip(range(0, len(srule) + 2, 2), srule):
-    print(r)
+for r in srule:
     f1, f2 = r.split(':')
     f2 = f2.strip()
     r2, r3, r4 = f2.split(' ')
@@ -32,9 +33,7 @@ for i, r in zip(range(0, len(srule) + 2, 2), srule):
 
 gdtkt = copy.deepcopy(altkt)
 
-for tkti in altkt.keys():
-    tkt = altkt.get(tkti)
-    
+for tkt in altkt:
     for tf in tkt:
         valid_flag = False
         
@@ -43,10 +42,42 @@ for tkti in altkt.keys():
                     or rule['r2min'] <= tf <= rule['r2max']:
                 valid_flag = True
                 break
-    
+                
         if not valid_flag:
-            del gdtkt[tkti]
+            gdtkt.remove(tkt)
             break
 
-for i in gdtkt.items():
-    print(i)
+cname = dict()
+
+for i in range(len(gdtkt[0])):
+    cname.update({ i: list(rules.keys())})
+
+sktcl = list(zip(*gdtkt))
+
+for tkti, tktcl in enumerate(sktcl):
+    for rname, rule in rules.items():
+        for tf in tktcl:
+            if not (rule['r1min'] <= tf <= rule['r1max'] \
+                    or rule['r2min'] <= tf <= rule['r2max'] \
+                    and rule['r1min'] <= tf <= rule['r1max'] \
+                    or rule['r2min'] <= tf <= rule['r2max']):
+
+                if rname in cname[tkti]:
+                    cname[tkti].remove(rname)
+    
+while len(list(itertools.chain(*cname.values()))) > len(cname):
+    for i, cns in cname.items():
+        if len(cns) == 1:
+            for j, cns2 in cname.items():
+                if cns[0] in cns2 and i != j:
+                    cns2.remove(cns[0])
+                    cname.update({j: cns2})
+
+sytkt = sytkt[0].split(',')
+answer = list()
+
+for i, cn in cname.items():
+    if cn[0].startswith('depart'):
+        answer.append(int(sytkt[i]))
+
+print(math.prod(answer))
