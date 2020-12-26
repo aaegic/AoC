@@ -49,7 +49,8 @@ for eq in eqlst:
         rpi = eq.index(')')
         lpi = rindex(eq, '(', 0, rpi)
 
-        eq = list(itertools.chain(eq[:lpi], [compute(eq[lpi+1:rpi])], eq[rpi+1:]))
+        eq = list(itertools.chain(eq[:lpi], [compute(eq[lpi+1:rpi])], \
+            eq[rpi+1:]))
     
     reslt.append(compute(eq))
 
