@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-#1800151
-from var_dump import var_dump
 
-fh = open("input-test", mode='r')
+fh = open("input", mode='r')
 intxt = fh.read()
 fh.close()
 
@@ -13,28 +11,47 @@ intxt = [list(map(int, i)) for i in intxt]
 
 #pass by reference
 #diag = intxt
+#pass by value
 diag = list(intxt)
 
-
-
-
+#o2
 while len(diag) > 1:
-
     #transpose
     diag_t = list(map(list, zip(*diag)))
 
     nbit = [sum(i) for i in diag_t]
     mcbs = [1 if i >= (len(diag_t[0]) / 2) else 0 for i in nbit]
 
-
-
     for i in range(len(mcbs)):
         for j in range(len(diag)):
             if mcbs[i] != diag[j][i]:
                 diag.pop(j)
                 break
+        #python-esque break 2
         else:
             continue
         break
-#100111101011
+
 o2 = ''.join(map(str, diag[0]))
+
+diag = list(intxt)
+
+"""
+the above works for o2 section but not for o2 ¯\_(ツ)_/¯
+"""
+
+#co2
+for i in range(len(diag[0])):
+    #transpose
+    diag_t = list(map(list, zip(*diag)))
+
+    nbit = [sum(i) for i in diag_t]
+    lcbs = [0 if i >= (len(diag_t[0]) / 2) else 1 for i in nbit]
+
+    remv = [diag[j] for j in range(len(diag)) if lcbs[i] != diag[j][i]]
+    [diag.remove(r) for r in remv if len(diag) > 1]
+
+co2 = ''.join(map(str, diag[0]))
+
+print(int(o2, 2) * int(co2, 2))
+
