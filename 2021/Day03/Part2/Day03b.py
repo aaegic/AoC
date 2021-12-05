@@ -37,7 +37,7 @@ o2 = ''.join(map(str, diag[0]))
 diag = list(intxt)
 
 """
-the above works for o2 section but not for o2 ¯\_(ツ)_/¯
+the above works for o2 section but not for co2 ¯\_(ツ)_/¯
 """
 
 #co2
