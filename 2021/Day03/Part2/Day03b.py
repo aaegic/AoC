@@ -45,8 +45,8 @@ for i in range(len(diag[0])):
     #transpose
     diag_t = list(map(list, zip(*diag)))
 
-    nbit = [sum(i) for i in diag_t]
-    lcbs = [0 if i >= (len(diag_t[0]) / 2) else 1 for i in nbit]
+    #nested list comprehension
+    lcbs = [0 if i >= (len(diag_t[0]) / 2) else 1 for i in [sum(i) for i in diag_t]]
 
     remv = [diag[j] for j in range(len(diag)) if lcbs[i] != diag[j][i]]
     [diag.remove(r) for r in remv if len(diag) > 1]
