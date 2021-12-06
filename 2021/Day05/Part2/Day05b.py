@@ -43,6 +43,7 @@ pnts = dict()
 for cord in cords:
     for x, y in draw(cord):
         if (x, y) not in pnts:
+            #python-esque multi-dimensional array using dict
             pnts.update({(x,y): 1})
         else:
             pnts.update({(x,y): 1 + pnts[(x,y)]})
