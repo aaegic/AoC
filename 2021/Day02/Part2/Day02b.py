@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-from var_dump import var_dump
-
 fh = open("input", mode='r')
 intxt = fh.read()
 fh.close()
