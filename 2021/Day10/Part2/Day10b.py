@@ -29,7 +29,6 @@ for ln, L in enumerate(T):
         ss.append(scr)
 
 ss.sort()
-# "rounding up" in Python
-i = -(-(len(ss)) // 2) 
+i = round(len(ss) / 2)
 
-print(ss[i-1])
+print(ss[i])
