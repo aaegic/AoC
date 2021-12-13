@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-def hasdup(p):
+def hasdup(p: list) -> bool:
     cnt = dict()
 
     for i in [l for l in p if l.islower()]:
