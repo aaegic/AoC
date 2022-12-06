@@ -34,6 +34,7 @@ def main () -> int:
             stacks.update({ int(e): 
                 [j[i] for j in itxt if j[i] in ascii_uppercase]})
     
+    #for n,f,t in zip(moves, moves, moves):
     while len(moves):
         n = moves.pop(0) #number of crates
         f = moves.pop(0) #from stack
