@@ -19,8 +19,8 @@ def main () -> int:
         if l.startswith('$ cd'):
             path.append(l[5:])
             
-            if ''.join(path) not in tree.keys():
-                tree.update({ ''.join(path): 0 })
+            if '/'.join(path) not in tree.keys():
+                tree.update({ '/'.join(path): 0 })
             
             continue
         
@@ -30,11 +30,11 @@ def main () -> int:
             
             for d in path:
                 pwd.append(d)
-                tree.update({ ''.join(pwd): tree[''.join(pwd)] + int(size) })
+                tree.update({ '/'.join(pwd): tree['/'.join(pwd)] + int(size) })
                 
             continue
 
-    for i in sorted(list(tree.values())):
+    for i in sorted(tree.values()):
         if i > 30000000 - (70000000 - tree['/']):
             print(i)
             return
