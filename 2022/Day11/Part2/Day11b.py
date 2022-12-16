@@ -36,7 +36,7 @@ def main () -> None:
 
     for m in itxt:        
         monkeys.append(monkey({
-                'items': [int(i) for i in  m[1][17:].split(",")],
+                'items': [int(i) for i in m[1][17:].split(",")],
                 'operation': m[2][19:], 'test': int(m[3][20:]),
                 'true': int(m[4][-1]), 'false': int(m[5][-1])
             }))
