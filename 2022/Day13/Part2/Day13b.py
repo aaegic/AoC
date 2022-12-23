@@ -5,7 +5,7 @@ from itertools import zip_longest
 
 def main () -> None:
 
-    def compare(l, r):
+    def compare(l, r) -> bool:
         for ll, rr in zip_longest(l, r, fillvalue=None):
             if ll == None: return True
             if rr == None: return False
@@ -18,7 +18,7 @@ def main () -> None:
                 if isinstance(ll, int): ll = [ll]
                 
                 ret = compare(ll, rr)
-                if ret == True or ret == False: return ret
+                if ret in [True, False]: return ret
                 
 
     itxt = open("input", mode='r').read().split("\n\n")
