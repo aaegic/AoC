@@ -18,7 +18,7 @@ def main () -> None:
                 if isinstance(ll, int): ll = [ll]
                 
                 ret = compare(ll, rr)
-                if ret in [True, False]: return ret
+                if ret in [True, False]: return ret #continue on None
                 
 
     itxt = open("input", mode='r').read().split("\n\n")
