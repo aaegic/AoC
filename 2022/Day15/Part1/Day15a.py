@@ -7,7 +7,7 @@ import re
 
 def main () -> None:
 
-    itxt = open("input", mode='r').readlines()
+    itxt = open("input-test", mode='r').readlines()
     itxt = [re.split('=|:|,', i.strip()) for i in itxt]
     mmap = [((int(i[1]),int(i[3])),(int(i[5]),int(i[7]))) for i in itxt]
     #itxt = [(np.array((int(i[1]),int(i[3]))),np.array((int(i[5]),int(i[7])))) for i in itxt]
@@ -24,22 +24,24 @@ def main () -> None:
     smap = set()
     
     YTARGET = 10
-    YTARGET = 2000000
+    #YTARGET = 2000000
     
-    for sensor, beacon in mmap:
+    for sensor, beacon in zip(sensors, beacons):
         rad = abs(sensor[0] - beacon[0]) + abs(sensor[1] - beacon[1])
         ic(sensor, rad)
 
         if sensor[1] < YTARGET:
             yreach = (np.array(sensor) + np.array((0, rad)))[1]
             if yreach < YTARGET: continue
+            xreach = yreach - YTARGET
         elif sensor[1] > YTARGET:
             yreach = (np.array(sensor) - np.array((0, rad)))[1]
             if yreach > YTARGET: continue
+            xreach = yreach - YTARGET
         else:
             pass
 
-        for x in range(abs(yreach - YTARGET) + 1):
+        for x in range(abs(xreach) + 1):
             if (sensor[0] + x, YTARGET) not in sensors + beacons:
                 smap.add((sensor[0] + x, YTARGET))
             if (sensor[0] - x, YTARGET) not in sensors + beacons:
