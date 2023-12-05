@@ -3,6 +3,7 @@
 from icecream import ic
 import sys
 from functools import reduce
+from math import prod
 
 def main () -> int:
 
@@ -44,15 +45,15 @@ def main () -> int:
                 if num not in gear_parts[(x,y)]:
                     gear_parts[(x,y)].append(num)
     
-    total = 0
+    prods = list()
     
     for parts in gear_parts.values():
         if len(parts) < 2: continue
         
         nums = [ next(iter(part.values())) for part in parts ]
-        total += reduce(lambda x, y: x * y, nums)
+        prods.append(prod(nums))
     
-    ic(total)
+    ic(sum(prods))
         
 
 if __name__ == '__main__':

@@ -15,15 +15,15 @@ def main () -> int:
 
     cards = int()
     
-    # @lru_cache(maxsize=None, typed=False)
-    def scratch(n):
-        nonlocal cards 
-        cards += 1
+    def scratch(n, c):
+        c += 1
         for g in range(1, len(games[n][0] & games[n][1])+1):
-            scratch(n+g)
+            c = scratch(n+g, c)
+            
+        return c
     
     for n in games:
-        scratch(n)
+        cards += scratch(n, 0)
         
     ic(cards)
     
